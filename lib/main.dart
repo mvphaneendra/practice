@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import 'model.dart';
+
 void main() {
   runApp(GetApp());
 }
@@ -18,32 +20,52 @@ class GetApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatelessWidget {
-  var count = 0.obs;
-
-  void Increment() {
-    count++;
-  }
+  final student = Student();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(title: Text('GetApp')),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Obx(() => Text(
-                    'Count is $count',
-                  )),
-              RaisedButton(
-                child: Text('Incrment'),
-                onPressed: () {
-                  Increment();
-                },
-              )
-            ],
-          ),
+        body: Column(
+          children: [
+            Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Obx(() {
+                    return Text(
+                      'Name is ${student.name.value} and Age is ${student.age.value}',
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    );
+                  }),
+                  ElevatedButton(
+                    child: Text('Upper'),
+                    onPressed: () {
+                      student.name.value = student.name.value.toUpperCase();
+                    },
+                  ),
+                  ElevatedButton(
+                    child: Text('Lower'),
+                    onPressed: () {
+                      student.name.value = student.name.value.toLowerCase();
+                    },
+                  ),
+                  ElevatedButton(
+                      child: Text('Age increment'),
+                      onPressed: () {
+                        student.age.value++;
+                      }),
+                  ElevatedButton(
+                      child: Text('Age decrement'),
+                      onPressed: () {
+                        student.age.value--;
+                      }),
+                ],
+              ),
+            ),
+          ],
         ));
   }
 }
